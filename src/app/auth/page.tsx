@@ -4,13 +4,13 @@ import AuthModal from "@/components/Modals/AuthModal";
 import Navbar from "@/components/Navbar/Navbar";
 // import { useAuthState } from "react-firebase-hooks/auth";
 // import { auth } from "@/firebase/firebase";
-import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
 
 export default function AuthPage(){
-	const {} = useRecoilValue(authModalState);
+	const [authModal, setAuthModal] = useAtom(authModalState);
 	// const [user, loading, error] = useAuthState(auth);
 	// const [pageLoading, setPageLoading] = useState(true);
 	const router = useRouter();

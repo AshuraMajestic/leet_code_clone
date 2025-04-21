@@ -6,13 +6,15 @@ import { IoClose } from 'react-icons/io5';
 import Login from './Login';
 import ResetPassword from './ResetPassword';
 import Signup from './Signup';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
+
 
 const AuthModal = () => {
-	const authModal = useRecoilValue(authModalState);
-	// const closeModal = useCloseModal();
+	const [authModal, setAuthModal] = useAtom(authModalState);
 
-	if (!authModal.isOpen) return null; // Optionally hide if modal is closed
+  if (!authModal.isOpen) return null;
+
+	// const closeModal = useCloseModal();
 
 	return (
 		<>

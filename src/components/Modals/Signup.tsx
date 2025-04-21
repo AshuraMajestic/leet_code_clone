@@ -1,16 +1,17 @@
 'use client';
 
-// import { authModalState } from '@/atoms/authModalAtom';
+import { useAtom } from 'jotai';
+import { authModalState } from '@/atoms/authModalAtom';
 // import { auth, firestore } from '@/firebase/firebase';
 // import { doc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 // import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-// import { useSetRecoilState } from 'recoil';
+
 import { toast } from 'react-toastify';
 
 const Signup: React.FC = () => {
-	// const setAuthModalState = useSetRecoilState(authModalState);
+	const [authModal,setAuthModal] = useAtom(authModalState);
 	const router = useRouter();
 	const [inputs, setInputs] = useState({
 		email: '',
@@ -73,9 +74,9 @@ const Signup: React.FC = () => {
 	// 	}
 	// }, [error]);
 
-	// const switchToLogin = () => {
-	// 	setAuthModalState((prev) => ({ ...prev, type: 'login' }));
-	// };
+	const switchToLogin = () => {
+		setAuthModal((prev) => ({ ...prev, type: 'login' }));
+	};
 
 	return (
 		<form className="space-y-6 px-6 pb-4" onSubmit={handleSubmit}>
@@ -142,7 +143,7 @@ const Signup: React.FC = () => {
 				Already have an account?{' '}
 				<button
 					type="button"
-					// onClick={switchToLogin}
+					onClick={switchToLogin}
 					className="text-blue-500 hover:underline"
 				>
 					Log In

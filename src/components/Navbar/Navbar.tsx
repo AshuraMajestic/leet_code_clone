@@ -1,16 +1,16 @@
 'use client';
 
-import { useSetRecoilState } from 'recoil';
 import { authModalState } from '@/atoms/authModalAtom';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { useAtom } from 'jotai';
 
 const Navbar = () => {
-	const setAuthModalState = useSetRecoilState(authModalState);
+	const [authModal,setAuthModal] = useAtom(authModalState);
 
 	const handleSignInClick = () => {
-		setAuthModalState((prev) => ({ ...prev, isOpen: true }));
+		setAuthModal((prev) => ({ ...prev, isOpen: true }));
 	};
 
 	return (

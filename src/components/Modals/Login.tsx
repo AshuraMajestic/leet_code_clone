@@ -1,15 +1,15 @@
 'use client';
 
-// import { authModalState } from '@/atoms/authModalAtom';
+import { authModalState } from '@/atoms/authModalAtom';
+import { useAtom } from 'jotai';
 // import { auth } from '@/firebase/firebase';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 // import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-// import { useSetRecoilState } from 'recoil';
 import { toast } from 'react-toastify';
 
 const Login: React.FC = () => {
-	// const setAuthModalState = useSetRecoilState(authModalState);
+	const [authModal,setAuthModal] = useAtom(authModalState);
 	const router = useRouter();
 	const [inputs, setInputs] = useState({ email: '', password: '' });
 	// const [signInWithEmailAndPassword, user, loading, error] =
@@ -55,9 +55,9 @@ const Login: React.FC = () => {
 	// 	}
 	// }, [error]);
 
-	// const switchView = (type: 'login' | 'register' | 'forgotPassword') => {
-	// 	setAuthModalState((prev) => ({ ...prev, type }));
-	// };
+	const switchView = (type: 'login' | 'register' | 'forgotPassword') => {
+		setAuthModal((prev) => ({ ...prev, type }));
+	};
 
 	return (
 		<form className="space-y-6 px-6 pb-4" onSubmit={handleLogin}>
@@ -112,7 +112,7 @@ const Login: React.FC = () => {
 			<div className="flex justify-end">
 				<button
 					type="button"
-					// onClick={() => switchView('forgotPassword')}
+					onClick={() => switchView('forgotPassword')}
 					className="text-sm text-brand-orange hover:underline"
 				>
 					Forgot Password?
@@ -124,7 +124,7 @@ const Login: React.FC = () => {
 				Not Registered?{' '}
 				<button
 					type="button"
-					// onClick={() => switchView('register')}
+					onClick={() => switchView('register')}
 					className="text-blue-500 hover:underline"
 				>
 					Create account

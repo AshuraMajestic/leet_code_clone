@@ -1,16 +1,11 @@
-import { atom } from "recoil";
+import { atom } from 'jotai';
 
-type AuthModalState = {
-	isOpen: boolean;
-	type: "login" | "register" | "forgotPassword";
-};
-
-const initalAuthModalState: AuthModalState = {
-	isOpen: false,
-	type: "login",
+export type AuthModalState = {
+  isOpen: boolean;
+  type: 'login' | 'register' | 'forgotPassword';
 };
 
 export const authModalState = atom<AuthModalState>({
-	key: "authModalState",
-	default: initalAuthModalState,
+  isOpen: false,
+  type: 'login',
 });
