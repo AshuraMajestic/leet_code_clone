@@ -2,25 +2,25 @@
 import { authModalState } from "@/atoms/authModalAtom";
 import AuthModal from "@/components/Modals/AuthModal";
 import Navbar from "@/components/Navbar/Navbar";
-// import { useAuthState } from "react-firebase-hooks/auth";
-// import { auth } from "@/firebase/firebase";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/firebase";
 
 export default function AuthPage(){
 	const [authModal, setAuthModal] = useAtom(authModalState);
-	// const [user, loading, error] = useAuthState(auth);
-	// const [pageLoading, setPageLoading] = useState(true);
+	const [user, loading, error] = useAuthState(auth);
+	const [pageLoading, setPageLoading] = useState(true);
 	const router = useRouter();
 
-	// useEffect(() => {
-	// 	if (user) router.push("/");
-	// 	if (!loading && !user) setPageLoading(false);
-	// }, [user, router, loading]);
+	useEffect(() => {
+		if (user) router.push("/");
+		if (!loading && !user) setPageLoading(false);
+	}, [user, router, loading]);
 
-	// if (pageLoading) return null;
+	if (pageLoading) return null;
 
 	return (
 		<div className='bg-gradient-to-b from-gray-600 to-black h-screen relative'>

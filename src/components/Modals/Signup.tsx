@@ -2,11 +2,11 @@
 
 import { useAtom } from 'jotai';
 import { authModalState } from '@/atoms/authModalAtom';
-// import { auth, firestore } from '@/firebase/firebase';
-// import { doc, setDoc } from 'firebase/firestore';
+import { auth,firestore } from '@/firebase/firebase';
+import { doc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-// import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 
 import { toast } from 'react-toastify';
 
@@ -18,8 +18,8 @@ const Signup: React.FC = () => {
 		displayName: '',
 		password: '',
 	});
-	// const [createUserWithEmailAndPassword, user, loading, error] =
-	// 	useCreateUserWithEmailAndPassword(auth);
+	const [createUserWithEmailAndPassword, user, loading, error] =
+		useCreateUserWithEmailAndPassword(auth);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -44,23 +44,23 @@ const Signup: React.FC = () => {
 				toastId: 'registering',
 			});
 
-			// const newUser = await createUserWithEmailAndPassword(email, password);
-			// if (!newUser) return;
+			const newUser = await createUserWithEmailAndPassword(email, password);
+			if (!newUser) return;
 
-			// const userData = {
-			// 	uid: newUser.user.uid,
-			// 	email: newUser.user.email,
-			// 	displayName,
-			// 	createdAt: Date.now(),
-			// 	updatedAt: Date.now(),
-			// 	likedProblems: [],
-			// 	dislikedProblems: [],
-			// 	solvedProblems: [],
-			// 	starredProblems: [],
-			// };
+			const userData = {
+				uid: newUser.user.uid,
+				email: newUser.user.email,
+				displayName,
+				createdAt: Date.now(),
+				updatedAt: Date.now(),
+				likedProblems: [],
+				dislikedProblems: [],
+				solvedProblems: [],
+				starredProblems: [],
+			};
 
-			// await setDoc(doc(firestore, 'users', newUser.user.uid), userData);
-			// router.push('/');
+			await setDoc(doc(firestore, 'users', newUser.user.uid), userData);
+			router.push('/');
 		} catch (err: any) {
 			toast.error(err.message, { position: 'top-center' });
 		} finally {
@@ -68,11 +68,11 @@ const Signup: React.FC = () => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	if (error) {
-	// 		toast.error(error.message, { position: 'top-center' });
-	// 	}
-	// }, [error]);
+	useEffect(() => {
+		if (error) {
+			toast.error(error.message, { position: 'top-center' });
+		}
+	}, [error]);
 
 	const switchToLogin = () => {
 		setAuthModal((prev) => ({ ...prev, type: 'login' }));
@@ -135,7 +135,7 @@ const Signup: React.FC = () => {
 				type="submit"
 				className="w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-brand-orange hover:bg-brand-orange-s focus:ring-2 focus:ring-orange-400 transition"
 			>
-				{/* {loading ? 'Registering...' : 'Register'} */}
+				{loading ? 'Registering...' : 'Register'}
 			</button>
 
 			{/* Login Switch */}

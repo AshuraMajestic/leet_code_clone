@@ -2,18 +2,18 @@
 
 import { authModalState } from '@/atoms/authModalAtom';
 import { useAtom } from 'jotai';
-// import { auth } from '@/firebase/firebase';
+import { auth } from '@/firebase/firebase';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-// import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
 
 const Login: React.FC = () => {
 	const [authModal,setAuthModal] = useAtom(authModalState);
 	const router = useRouter();
 	const [inputs, setInputs] = useState({ email: '', password: '' });
-	// const [signInWithEmailAndPassword, user, loading, error] =
-		// useSignInWithEmailAndPassword(auth);
+	const [signInWithEmailAndPassword, user, loading, error] =
+		useSignInWithEmailAndPassword(auth);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -32,28 +32,28 @@ const Login: React.FC = () => {
 			return;
 		}
 
-		// try {
-		// 	const userCred = await signInWithEmailAndPassword(email, password);
-		// 	if (!userCred) return;
-		// 	router.push('/');
-		// } catch (err: any) {
-		// 	toast.error(err.message, {
-		// 		position: 'top-center',
-		// 		autoClose: 3000,
-		// 		theme: 'dark',
-		// 	});
-		// }
+		try {
+			const userCred = await signInWithEmailAndPassword(email, password);
+			if (!userCred) return;
+			router.push('/');
+		} catch (err: any) {
+			toast.error(err.message, {
+				position: 'top-center',
+				autoClose: 3000,
+				theme: 'dark',
+			});
+		}
 	};
 
-	// useEffect(() => {
-	// 	if (error) {
-	// 		toast.error(error.message, {
-	// 			position: 'top-center',
-	// 			autoClose: 3000,
-	// 			theme: 'dark',
-	// 		});
-	// 	}
-	// }, [error]);
+	useEffect(() => {
+		if (error) {
+			toast.error(error.message, {
+				position: 'top-center',
+				autoClose: 3000,
+				theme: 'dark',
+			});
+		}
+	}, [error]);
 
 	const switchView = (type: 'login' | 'register' | 'forgotPassword') => {
 		setAuthModal((prev) => ({ ...prev, type }));
@@ -105,7 +105,7 @@ const Login: React.FC = () => {
 				className="w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center
 				bg-brand-orange hover:bg-brand-orange-s focus:ring-2 focus:ring-orange-400 transition"
 			>
-				{/* {loading ? 'Loading...' : 'Log In'} */}Log In
+				{loading ? 'Loading...' : 'Log In'}
 			</button>
 
 			{/* Forgot Password */}

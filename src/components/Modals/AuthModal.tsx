@@ -14,14 +14,14 @@ const AuthModal = () => {
 
   if (!authModal.isOpen) return null;
 
-	// const closeModal = useCloseModal();
+	const closeModal = useCloseModal();
 
 	return (
 		<>
 			{/* Background Overlay */}
 			<div
 				className="fixed inset-0 z-40 bg-black bg-opacity-60"
-				// onClick={closeModal}
+				onClick={closeModal}
 			></div>
 
 			{/* Modal Container */}
@@ -34,7 +34,7 @@ const AuthModal = () => {
 							<button
 								type="button"
 								className="text-white hover:text-gray-300"
-								// onClick={closeModal}
+								onClick={closeModal}
 							>
 								<IoClose className="w-6 h-6" />
 							</button>
@@ -56,20 +56,20 @@ const AuthModal = () => {
 
 export default AuthModal;
 
-// function useCloseModal() {
-	// const setAuthModal = useSetRecoilState(authModalState);
+function useCloseModal() {
+	const [authModal, setAuthModal] = useAtom(authModalState);
 
-	// const closeModal = useCallback(() => {
-	// 	setAuthModal((prev) => ({ ...prev, isOpen: false, type: 'login' }));
-	// }, [setAuthModal]);
+	const closeModal = useCallback(() => {
+		setAuthModal((prev) => ({ ...prev, isOpen: false, type: 'login' }));
+	}, [setAuthModal]);
 
-// 	useEffect(() => {
-// 		const handleEsc = (e: KeyboardEvent) => {
-// 			if (e.key === 'Escape') closeModal();
-// 		};
-// 		window.addEventListener('keydown', handleEsc);
-// 		return () => window.removeEventListener('keydown', handleEsc);
-// 	}, [closeModal]);
+	useEffect(() => {
+		const handleEsc = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') closeModal();
+		};
+		window.addEventListener('keydown', handleEsc);
+		return () => window.removeEventListener('keydown', handleEsc);
+	}, [closeModal]);
 
-// 	return closeModal;
-// }
+	return closeModal;
+}
