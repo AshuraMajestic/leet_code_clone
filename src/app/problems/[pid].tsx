@@ -1,25 +1,24 @@
 
-// import Workspace from "@/components/Workspace/Workspace";
-// import useHasMounted from "@/hooks/useHasMounted";
-// import { problems } from "@/utils/problems";
-// import { Problem } from "@/utils/types/problem";
+import Workspace from "@/components/Workspace/Workspace";
+import useHasMounted from "@/hooks/useHasMounted";
+import { problems } from "@/utils/problems";
+import { Problem } from "@/utils/types/problem";
 import Topbar from "@/components/TopBar/TopBar";
 import React from "react";
 
-// type ProblemPageProps = {
-// 	problem: Problem;
-// };
+type ProblemPageProps = {
+	problem: Problem;
+};
 
-// const ProblemPage: React.FC<ProblemPageProps> = ({ problem }) => {
-const ProblemPage = ({ problem }) => {
-	// const hasMounted = useHasMounted();
+const ProblemPage: React.FC<ProblemPageProps> = ({ problem }) => {
+	const hasMounted = useHasMounted();
 
-	// if (!hasMounted) return null;
+	if (!hasMounted) return null;
 
 	return (
 		<div>
 			<Topbar problemPage />
-			{/* <Workspace problem={problem} /> */}
+			<Workspace problem={problem} />
 		</div>
 	);
 };

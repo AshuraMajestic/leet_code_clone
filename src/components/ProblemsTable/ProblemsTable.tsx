@@ -6,8 +6,8 @@ import { IoClose } from "react-icons/io5";
 import YouTube from "react-youtube";
 import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
 import { auth, firestore } from "@/firebase/firebase";
-// import { DBProblem } from "@/utils/types/problem;
 import { useAuthState } from "react-firebase-hooks/auth";
+import { DBProblem } from "@/utils/types/problem";
 
 type ProblemsTableProps = {
 	setLoadingProblems: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,6 +19,7 @@ const ProblemsTable: React.FC<ProblemsTableProps> = ({ setLoadingProblems }) => 
 		videoId: "",
 	});
 	const problems = useGetProblems(setLoadingProblems);
+	console.log(problems)
 	const solvedProblems = useGetSolvedProblems();
 	console.log("solvedProblems", solvedProblems);
 	const closeModal = () => {
@@ -37,7 +38,7 @@ const ProblemsTable: React.FC<ProblemsTableProps> = ({ setLoadingProblems }) => 
 	return (
 		<>
 			<tbody className='text-white'>
-				{/* {problems.map((problem, idx) => {
+				{problems.map((problem, idx) => {
 					const difficulyColor =
 						problem.difficulty === "Easy"
 							? "text-dark-green-s"
@@ -84,7 +85,7 @@ const ProblemsTable: React.FC<ProblemsTableProps> = ({ setLoadingProblems }) => 
 							</td>
 						</tr>
 					);
-				})} */}
+				})}
 			</tbody>
 			{youtubePlayer.isOpen && (
 				<tfoot className='fixed top-0 left-0 h-screen w-screen flex items-center justify-center'>
@@ -116,7 +117,7 @@ const ProblemsTable: React.FC<ProblemsTableProps> = ({ setLoadingProblems }) => 
 export default ProblemsTable;
 
 function useGetProblems(setLoadingProblems: React.Dispatch<React.SetStateAction<boolean>>) {
-	// const [problems, setProblems] = useState<DBProblem[]>([]);
+	const [problems, setProblems] = useState<DBProblem[]>([]);
 
 	useEffect(() => {
 		const getProblems = async () => {
@@ -124,17 +125,17 @@ function useGetProblems(setLoadingProblems: React.Dispatch<React.SetStateAction<
 			setLoadingProblems(true);
 			const q = query(collection(firestore, "problems"), orderBy("order", "asc"));
 			const querySnapshot = await getDocs(q);
-			// const tmp: DBProblem[] = [];
-			// querySnapshot.forEach((doc) => {
-			// 	tmp.push({ id: doc.id, ...doc.data() } as DBProblem);
-			// });
-			// setProblems(tmp);
+			const tmp: DBProblem[] = [];
+			querySnapshot.forEach((doc) => {
+				tmp.push({ id: doc.id, ...doc.data() } as DBProblem);
+			});
+			setProblems(tmp);
 			setLoadingProblems(false);
 		};
 
 		getProblems();
 	}, [setLoadingProblems]);
-	// return problems;
+	return problems;
 }
 
 function useGetSolvedProblems() {
